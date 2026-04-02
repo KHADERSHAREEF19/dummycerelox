@@ -1,0 +1,15 @@
+#flask==3.0.0
+#flask-socketio==5.3.5
+#pywin32==306
+#reportlab==4.0.7
+#requests==2.31.0
+#python-socketio==5.10.0
+#simple-websocket==1.0.0
+
+flask==3.0.0
+flask-socketio==5.3.5
+reportlab==4.0.7
+requests==2.31.0
+python-socketio==5.10.0
+simple-websocket==1.0.0
+# pywin32==306  # Windows-only, install separately on Windows

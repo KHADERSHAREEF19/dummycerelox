@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CereloX - AI-Powered Log Intelligence</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo-icon">⚡</span>
+            <h1>CereloX</h1>
+        </div>
+        <div class="nav-menu">
+            <button class="nav-btn active" onclick="showPage('dashboard')">Dashboard</button>
+            <button class="nav-btn" onclick="showPage('logs')">Logs</button>
+            <button class="nav-btn" onclick="showPage('reports')">Reports</button>
+            <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+        </div>
+    </nav>
+
+    <!-- Dashboard Page -->
+    <div id="dashboard" class="page active">
+        <!-- Sonar Radar -->
+        <div class="sonar-container">
+            <div class="sonar-radar">
+                <div class="radar-sweep"></div>
+                <div class="radar-center"></div>
+            </div>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-grid">
+            <div class="kpi-card glass">
+                <h3>Total Events</h3>
+                <div class="kpi-value" id="totalEvents">0</div>
+                <span class="kpi-label">Logged</span>
+            </div>
+            <div class="kpi-card glass">
+                <h3>Critical Alerts</h3>
+                <div class="kpi-value alert" id="criticalAlerts">0</div>
+                <span class="kpi-label">Active</span>
+            </div>
+            <div class="kpi-card glass">
+                <h3>System Health</h3>
+                <div class="kpi-value success" id="systemHealth">100%</div>
+                <span class="kpi-label">Operational</span>
+            </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+            <div class="chart-card glass">
+                <h3>Events Per Second</h3>
+                <canvas id="epsGauge"></canvas>
+            </div>
+            <div class="chart-card glass">
+                <h3>Event Distribution</h3>
+                <canvas id="eventPieChart"></canvas>
+            </div>
+            <div class="chart-card glass wide">
+                <h3>Event Traffic</h3>
+                <canvas id="trafficChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logs Page -->
+    <div id="logs" class="page">
+        <div class="logs-container glass">
+            <div class="logs-header">
+                <h2>Real-Time Event Logs</h2>
+                <input type="text" id="logSearch" placeholder="Search logs..." class="search-input">
+            </div>
+            <div class="logs-table-container">
+                <table class="logs-table">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable(0)">Timestamp ▼</th>
+                            <th onclick="sortTable(1)">Event ID</th>
+                            <th onclick="sortTable(2)">Level</th>
+                            <th onclick="sortTable(3)">Source</th>
+                            <th onclick="sortTable(4)">Message</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logsTableBody">
+                        <tr><td colspan="5" class="loading">Loading logs...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <button onclick="prevPage()">← Previous</button>
+                <span id="pageInfo">Page 1</span>
+                <button onclick="nextPage()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reports Page -->
+    <div id="reports" class="page">
+        <div class="reports-container glass">
+            <h2>Generate Report</h2>
+            <p>Create a comprehensive PDF report of system logs with AI-generated insights.</p>
+            <button class="btn-primary" onclick="generateReport()">
+                <span id="reportBtnText">📄 Generate Report</span>
+            </button>
+            <div id="reportPreview" class="report-preview"></div>
+        </div>
+    </div>
+
+    <!-- AI Chat Bar (SaECHO) -->
+    <div class="chat-bar glass">
+        <div class="chat-input-container">
+            <input type="text" id="chatInput" placeholder="Ask SaECHO AI anything about your logs..." class="chat-input">
+            <button onclick="sendChatQuery()" class="btn-chat">Send</button>
+        </div>
+        <div id="chatResponse" class="chat-response"></div>
+    </div>
+
+    <!-- Cursor Trail Effect -->
+    <canvas id="cursorTrail"></canvas>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
